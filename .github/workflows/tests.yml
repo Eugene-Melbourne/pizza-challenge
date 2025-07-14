@@ -13,13 +13,18 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    env:
-      DB_CONNECTION: mysql
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_DATABASE: laravel
-      DB_USERNAME: root
-      DB_PASSWORD: secret
+    container:
+      image: php:8.4
+      env:
+        DB_CONNECTION: mysql
+        DB_HOST: mysql
+        DB_PORT: 3306
+        DB_DATABASE: laravel
+        DB_USERNAME: root
+        DB_PASSWORD: secret
+        SESSION_DRIVER: array
+        CACHE_STORE: array
+
 
     services:
       mysql:
@@ -33,18 +38,28 @@ jobs:
           --health-cmd="mysqladmin ping"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=3
+          --health-retries=5
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.4
-          tools: composer:v2
-          coverage: xdebug
+      - name: Install MySQL PDO Extension
+        run: |
+          apt-get update
+          apt-get install -y libzip-dev unzip libpng-dev libonig-dev libxml2-dev
+          docker-php-ext-install pdo pdo_mysql
+
+      - name: Setup Composer
+        run: |
+          apt-get update && apt-get install -y unzip curl git libzip-dev libpng-dev libonig-dev libxml2-dev
+          curl -sS https://getcomposer.org/installer | php
+          mv composer.phar /usr/local/bin/composer
+
+      - name: Install Node.js
+        run: |
+          curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+          apt-get install -y nodejs
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -72,11 +87,8 @@ jobs:
 
       - name: Wait for MySQL
         run: |
-          for i in {1..30}; do
-            nc -z mysql 3306 && break
-            echo "Waiting for MySQL..."
-            sleep 1
-          done
+          echo "Waiting for MySQL..."
+          sleep 15
 
       - name: Run Migrations
         run: php artisan migrate --force
