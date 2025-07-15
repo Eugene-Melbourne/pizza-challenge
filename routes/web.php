@@ -1,20 +1,16 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PizzaController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('dashboard', function () {
-    $pizzas = \App\Models\Pizza::with(['customer', 'status'])->get();
-
-    return Inertia::render('Dashboard', [
-        'pizzas' => $pizzas,
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::post('pizzas/{pizza}/advance-status', [PizzaController::class, 'advanceStatus'])
     ->middleware(['auth', 'verified'])
