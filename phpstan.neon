@@ -3,5 +3,11 @@ includes:
 
 parameters:
     paths:
-        - app
+        - app/
+        - routes/
+        - database/
     level: 7
+
+    ignoreErrors:
+        - message: '#^Method App\\Models\\.* should return Illuminate\\Database\\Eloquent\\Relations\\HasMany<App\\Models\\.*, App\\Models\\.*> but returns Illuminate\\Database\\Eloquent\\Relations\\HasMany<App\\Models\\.*, \$this\(App\\Models\\.*\)>.$#'
+        - message: '#^Method App\\Models\\.* should return Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\.*, App\\Models\\.*> but returns Illuminate\\Database\\Eloquent\\Relations\\BelongsTo<App\\Models\\.*, \$this\(App\\Models\\.*\)>.$#'
