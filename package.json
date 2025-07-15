@@ -1,4 +1,5 @@
 {
+    "name": "pizza-challenge",
     "private": true,
     "type": "module",
     "scripts": {
