@@ -20,4 +20,29 @@ export default defineConfig({
             },
         }),
     ],
+    server: {
+        //host: '0.0.0.0',
+        //port: 5173,
+        hmr: {
+            host: 'localhost',
+            port: 5173,
+        },
+        watch: {
+            usePolling: true,
+            interval: 500,
+            ignored: [
+                '**/node_modules/**',
+                '**/.git/**',
+                '**/vendor/**',
+                '**/app/**',
+                '**/bootstrap/**',
+                '**/config/**',
+                '**/database/**',
+                '**/public/**',
+                '**/routes/**',
+                '**/storage/**',
+                '**/tests/**',
+            ],
+        },
+    },
 });

@@ -16,7 +16,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
-    <Head title="Dashboard++" />
+    <Head title="Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div v-if="usePage().props.flash?.success" class="mb-4 rounded bg-green-100 p-3 text-green-800">
