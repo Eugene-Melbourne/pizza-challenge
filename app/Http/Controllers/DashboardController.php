@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
-use Inertia\Inertia;
 use App\Models\Pizza;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class DashboardController extends Controller
 {
