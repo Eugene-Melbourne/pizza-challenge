@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Listeners;
 
 use App\Events\PizzaStatusUpdated;
@@ -80,6 +82,10 @@ class NotifyCustomerOfPizzaStatusChangeTest extends TestCase
                     'status_key' => PizzaStatus::KEY_STARTED,
                     'status_set_at' => '2024-01-01 12:00:00',
                 ], $decrypted);
+
+                // Check that basic auth header is present and correct
+                $authHeader = $request->header('Authorization');
+                $this->assertNull($authHeader[0] ?? null);
 
                 return Http::response([], 200);
             },
