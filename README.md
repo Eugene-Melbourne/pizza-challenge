@@ -173,6 +173,25 @@ These match the checks run automatically in CI (`lint.yml`). You can run them ma
 
 ---
 
+## 📘 API Documentation
+
+This project provides **OpenAPI-based documentation** for the Public Website Pizza Status Update API.
+
+### 📝 Specification File
+
+- The raw OpenAPI YAML file is available at:  
+  [`/docs/public-website-api.yaml`](http://localhost/docs/public-website-api.yaml)  
+  *(served via Laravel route from `public/docs/public-website-api.yaml`)*
+
+### 🖥️ Interactive Documentation (HTML)
+
+- View the live documentation at:  
+  [`/docs/pizza-status`](http://localhost/docs/pizza-status)
+
+This page uses **Stoplight Elements** to render the OpenAPI spec as an interactive UI, complete with collapsible sections, parameter info, and response codes.
+
+> 💡 The spec is parsed directly from the YAML file, and styles are provided via CDN to keep it lightweight and readable.
+
 ---
 
 ## ✅ Quick help for Developers

@@ -1,0 +1,82 @@
+openapi: 3.1.0
+info:
+  title: Public Website Pizza Status Update API
+  version: 1.0.0
+  description: >
+    This API receives pizza status updates from the pizza backend system.
+    The payload is optionally encrypted using Laravel's Encrypter (AES-256-CBC) and base64-encoded.
+    Optionally secured using HTTP Basic Authentication.
+
+servers:
+  - url: https://public-website.example.com/api/v1
+
+paths:
+  /pizza-status-update:
+    post:
+      summary: Receive encrypted pizza status update
+      description: >
+        Accepts a pizza status change notification from the backend system.
+        The payload must be encrypted using a shared symmetric key (AES-256-CBC) and base64-encoded.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EncryptedPayload"
+            examples:
+              sample:
+                summary: Encrypted payload example
+                value:
+                  payload: "base64-encoded-string-here"
+      responses:
+        "200":
+          description: Update received and processed successfully
+        "400":
+          description: Invalid or malformed payload
+        "401":
+          description: Unauthorized - invalid or missing Basic Auth credentials
+        "500":
+          description: Server error while processing the payload
+      security:
+        - basicAuth: []
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    EncryptedPayload:
+      type: object
+      required:
+        - payload
+      properties:
+        payload:
+          type: string
+          description: >
+            Encrypted payload (base64-encoded string).
+            Encrypted using AES-256-CBC via Laravel's Encrypter.
+    PizzaStatusUpdateDecrypted:
+      type: object
+      description: >
+        The decrypted structure of the payload after processing.
+      required:
+        - pizza_id
+        - customer_name
+        - status_key
+        - status_set_at
+      properties:
+        pizza_id:
+          type: integer
+          example: 1
+        customer_name:
+          type: string
+          example: John Doe
+        status_key:
+          type: string
+          example: baked
+        status_set_at:
+          type: string
+          format: date-time
+          example: "2024-01-01T12:00:00"
