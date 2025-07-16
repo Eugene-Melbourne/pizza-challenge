@@ -193,6 +193,9 @@ npm run lint
 npm run build
 
 php artisan migrate:fresh --seed
+php artisan queue:work
+php artisan queue:listen
 
 ```
+
 

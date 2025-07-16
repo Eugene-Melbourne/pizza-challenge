@@ -35,4 +35,18 @@ return [
         ],
     ],
 
+    'public_website_api' => [
+        'url' => env('PUBLIC_WEBSITE_API_URL'),
+        'basic_auth' => [
+            'is_active' => env('PUBLIC_WEBSITE_API_BASIC_AUTH_IS_ACTIVE', true),
+            'username' => env('PUBLIC_WEBSITE_API_BASIC_AUTH_USERNAME'),
+            'password' => env('PUBLIC_WEBSITE_API_BASIC_AUTH_PASSWORD'),
+        ],
+        'encryption' => [
+            'is_active' => env('PUBLIC_WEBSITE_API_ENCRYPTION_IS_ACTIVE', true),
+            'cipher' => env('PUBLIC_WEBSITE_API_ENCRYPTION_CIPHER', 'AES-256-CBC'),
+            'key' => env('PUBLIC_WEBSITE_API_ENCRYPTION_KEY'),
+        ],
+    ],
+
 ];

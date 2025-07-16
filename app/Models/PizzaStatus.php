@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use RuntimeException;
 
 /**
  * @property int $id
@@ -57,7 +58,7 @@ class PizzaStatus extends Model
     {
         $index = array_search($this->key, self::ORDER, true);
         if (! is_int($index)) {
-            throw new \RuntimeException('Index should be integer, got type'.gettype($index).'.');
+            throw new RuntimeException('Index should be integer, got type'.gettype($index).'.');
         }
 
         return $index;
@@ -67,7 +68,7 @@ class PizzaStatus extends Model
     {
         $currentIndex = array_search($key, self::ORDER, true);
         if (! is_int($currentIndex)) {
-            throw new \RuntimeException('Index should be integer, got type'.gettype($currentIndex).'.');
+            throw new RuntimeException('Index should be integer, got type'.gettype($currentIndex).'.');
         }
         if ($currentIndex === count(self::ORDER) - 1) {
             return null;
