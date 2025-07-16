@@ -135,4 +135,24 @@ class NotifyCustomerOfPizzaStatusChangeTest extends TestCase
         $listener = new NotifyCustomerOfPizzaStatusChange;
         $listener->handle($event);
     }
+
+    public function test_http_exception_is_thrown_on_404()
+    {
+        $pizza = $this->pizza;
+        $key = $this->key;
+
+        $event = new PizzaStatusUpdated($pizza);
+
+        Http::fake([
+            'https://example.com/api' => function ($request) {
+                return Http::response(['error' => 'Not Found'], 404);
+            },
+        ]);
+
+        $listener = new NotifyCustomerOfPizzaStatusChange;
+
+        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+
+        $listener->handle($event);
+    }
 }
